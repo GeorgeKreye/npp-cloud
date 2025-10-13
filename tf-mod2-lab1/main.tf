@@ -60,7 +60,7 @@ resource "google_compute_firewall" "tf-mod2-lab1-fwrule2" {
   name        = "tf-mod2-lab1-fwrule2"
   network     = "tf-mod2-lab1-vpc2"
   // need the network created before the firewall rule
-  depends_on = [google_compute_network.tf-mod2-demo1-vpc2]
+  depends_on = [google_compute_network.tf-mod2-lab1-vpc2]
 
   allow {
     protocol  = "tcp"
