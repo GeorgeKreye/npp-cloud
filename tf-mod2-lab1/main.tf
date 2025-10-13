@@ -101,7 +101,7 @@ resource "google_compute_instance" "tf-mod2-lab1-vm1" {
 }
 
 resource "google_compute_instance" "tf-mod2-lab1-vm2" {
-  name = "tf-mod2-lab2-vm2"
+  name = "tf-mod2-lab1-vm2"
   machine_type = "e2-micro"
   zone = "us-central1-a"  
   depends_on = [google_compute_network.tf-mod2-lab1-vpc2, google_compute_subnetwork.tf-mod2-lab1-sub2]
