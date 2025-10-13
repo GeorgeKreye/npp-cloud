@@ -9,12 +9,12 @@ terraform {
 
 // VPCs
 resource "google_compute_network" "tf-mod2-lab1-vpc1" {
-  name = "tf-mod2-demo1-vpc1"
+  name = "tf-mod2-lab1-vpc1"
   auto_create_subnetworks = "false"
 }
 
 resource "google_compute_network" "tf-mod2-lab1-vpc2" {
-  name = "tf-mod2-demo1-vpc2"
+  name = "tf-mod2-lab1-vpc2"
   auto_create_subnetworks = "false"
 }
 
@@ -25,14 +25,16 @@ resource "google_compute_subnetwork" "tf-mod2-lab1-sub1" {
   region        = "us-central1"
   network       = google_compute_network.tf-mod2-lab1-vpc1.id
 }
+
 resource "google_compute_subnetwork" "tf-mod2-lab1-sub2" {
   name          = "tf-mod2-lab1-sub2"
   ip_cidr_range = "10.0.2.0/24"
   region        = "us-central1"
   network       = google_compute_network.tf-mod2-lab1-vpc2.id
 }
+
 resource "google_compute_subnetwork" "tf-mod2-lab1-sub3" {
-  name          = "tf-mod2-lab11-sub3"
+  name          = "tf-mod2-lab1-sub3"
   ip_cidr_range = "10.0.3.0/24"
   region        = "us-central1"
   network       = google_compute_network.tf-mod2-lab1-vpc2.id
@@ -55,6 +57,7 @@ resource "google_compute_firewall" "tf-mod2-lab1-fwrule1" {
   }
   source_ranges = ["0.0.0.0/0"]
 }
+
 resource "google_compute_firewall" "tf-mod2-lab1-fwrule2" {
   project = "kreye-lab1project-cunetworking"
   name        = "tf-mod2-lab1-fwrule2"
@@ -74,7 +77,7 @@ resource "google_compute_firewall" "tf-mod2-lab1-fwrule2" {
 
 // VMs
 resource "google_compute_instance" "tf-mod2-lab1-vm1" {
-  name = "tf-mod2-lab1-vm"
+  name = "tf-mod2-lab1-vm1"
   machine_type = "e2-micro"
   zone = "us-central1-a"  
   depends_on = [google_compute_network.tf-mod2-lab1-vpc1, google_compute_subnetwork.tf-mod2-lab1-sub1]
@@ -96,8 +99,9 @@ resource "google_compute_instance" "tf-mod2-lab1-vm1" {
     startup-script = "sudo apt update; sudo apt -y install netcat-traditional ncat;"
   }
 }
+
 resource "google_compute_instance" "tf-mod2-lab1-vm2" {
-  name = "tf-mod2-lab2-vm"
+  name = "tf-mod2-lab2-vm2"
   machine_type = "e2-micro"
   zone = "us-central1-a"  
   depends_on = [google_compute_network.tf-mod2-lab1-vpc2, google_compute_subnetwork.tf-mod2-lab1-sub2]
@@ -119,6 +123,7 @@ resource "google_compute_instance" "tf-mod2-lab1-vm2" {
     startup-script = "sudo apt update; sudo apt -y install netcat-traditional ncat;"
   }
 }
+
 resource "google_compute_instance" "tf-mod2-lab1-vm3" {
   name = "tf-mod2-lab1-vm3"
   machine_type = "e2-micro"
@@ -142,8 +147,9 @@ resource "google_compute_instance" "tf-mod2-lab1-vm3" {
     startup-script = "sudo apt update; sudo apt -y install netcat-traditional ncat;"
   }
 }
+
 resource "google_compute_instance" "tf-mod2-lab1-vm4" {
-  name = "tf-mod2-lab1-vm"
+  name = "tf-mod2-lab1-vm4"
   machine_type = "e2-micro"
   zone = "us-central1-a"  
   depends_on = [google_compute_network.tf-mod2-lab1-vpc2, google_compute_subnetwork.tf-mod2-lab1-sub3]
