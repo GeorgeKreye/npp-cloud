@@ -45,7 +45,7 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule1" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["22", "1234"]
+    ports     = ["22", "1234", "50000"]
   }
   allow {
     protocol = "icmp"
@@ -62,7 +62,7 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule2" {
 
   allow {
     protocol  = "tcp"
-    ports     = ["22", "1234"]
+    ports     = ["22", "1234", "50000"]
   }
   allow {
     protocol = "icmp"
@@ -71,13 +71,21 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule2" {
 }
 
 // Router
-resource "" "" {
-    
+resource "google_compute_router" "tf-mod3-lab1-router" {
+    name = "tf-mod3-lab1-router"
+    region = "us-east1"
+    network = "google_compute_network.tf-mod3-lab1-vpc2"
+    depends_on = [google_compute_network.tf-mod3-lab1-vpc2]
 }
 
 // NAT
-resource "" "" {
-
+resource "google_computer_router_nat" "nat" {
+    name = "tf-mod3-lab1-nat"
+    router = "tf-mod3-lab1-router"
+    region = google_compute_router.tf-mod3-lab1-router.region
+    nat_ip_allocate_option = "AUTO_ONLY"
+    source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+    depends_on = [google_compute_network.tf-mod3-lab1-vpc2,google_compute_router.tf-mod3-lab1-router]
 }
 
 // VMs
