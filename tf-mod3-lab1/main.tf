@@ -34,8 +34,7 @@ resource "google_compute_subnetwork" "tf-mod3-lab1-sub2" {
   network       = google_compute_network.tf-mod3-lab1-vpc2.id
 }
 
-// Firewalls
-// TODO: add vxlan ports
+// Firewall
 resource "google_compute_firewall" "tf-mod3-lab1-fwrule1" {
   project = "kreye-lab1project-cunetworking"
   name    = "tf-mod3-lab1-fwrule1"
@@ -45,7 +44,11 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule1" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "1234", "50000"]
+    ports    = ["22", "1234"]
+  }
+  allow {
+    protocol = "udp"
+    ports = ["50000"]
   }
   allow {
     protocol = "icmp"
@@ -62,7 +65,11 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule2" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "1234", "50000"]
+    ports    = ["22", "1234"]
+  }
+  allow {
+    protocol = "udp"
+    ports = ["50000"]
   }
   allow {
     protocol = "icmp"
@@ -74,12 +81,12 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule2" {
 resource "google_compute_router" "tf-mod3-lab1-router" {
   name       = "tf-mod3-lab1-router"
   region     = "us-east1"
-  network    = "google_compute_network.tf-mod3-lab1-vpc2"
+  network    = google_compute_network.tf-mod3-lab1-vpc2.id
   depends_on = [google_compute_network.tf-mod3-lab1-vpc2]
 }
 
 // NAT
-resource "google_computer_router_nat" "nat" {
+resource "google_compute_router_nat" "nat" {
   name                               = "tf-mod3-lab1-nat"
   router                             = "tf-mod3-lab1-router"
   region                             = google_compute_router.tf-mod3-lab1-router.region
