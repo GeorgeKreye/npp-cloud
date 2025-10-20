@@ -48,7 +48,7 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule1" {
   }
   allow {
     protocol = "udp"
-    ports = ["50000"]
+    ports    = ["50000"]
   }
   allow {
     protocol = "icmp"
@@ -69,7 +69,7 @@ resource "google_compute_firewall" "tf-mod3-lab1-fwrule2" {
   }
   allow {
     protocol = "udp"
-    ports = ["50000"]
+    ports    = ["50000"]
   }
   allow {
     protocol = "icmp"
@@ -93,6 +93,7 @@ resource "google_compute_router_nat" "nat" {
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   depends_on                         = [google_compute_network.tf-mod3-lab1-vpc2, google_compute_router.tf-mod3-lab1-router]
+  max_ports_per_vm                   = 1
 }
 
 // VMs
